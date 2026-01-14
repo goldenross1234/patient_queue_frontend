@@ -6,9 +6,14 @@ export default function Logs() {
 
   useEffect(() => {
     const load = async () => {
-      const res = await api.get("logs/");
-      setLogs(res.data);
+      try {
+        const res = await api.get("logs/");
+        setLogs(res.data);
+      } catch (e) {
+        console.error("Failed to load logs", e);
+      }
     };
+
     load();
     const timer = setInterval(load, 2000);
     return () => clearInterval(timer);
@@ -17,13 +22,14 @@ export default function Logs() {
   return (
     <div style={{ padding: "20px" }}>
       <h2>System Logs</h2>
-      <ul>
+      <div style={{ maxHeight: "400px", overflowY: "auto" }}>
         {logs.map((l) => (
-          <li key={l.id}>
-            {new Date(l.timestamp).toLocaleTimeString()} — {l.event}: {l.message}
-          </li>
+          <div key={l.id}>
+            {new Date(l.timestamp).toLocaleTimeString()} —{" "}
+            <strong>{l.event}</strong>: {l.message}
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }

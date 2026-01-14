@@ -9,12 +9,24 @@ export default function Login({ onLogin }) {
 
   const login = async () => {
     try {
+      // Get JWT
       const res = await axios.post("http://192.168.101.144:8000/api/token/", {
         username,
         password,
       });
 
-      localStorage.setItem("token", res.data.access);
+      const token = res.data.access;
+      localStorage.setItem("token", token);
+
+      // Fetch user info + role
+      const me = await axios.get("http://192.168.101.144:8000/api/me/", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      localStorage.setItem("role", me.data.role);
+
       onLogin();
       navigate("/staff");
     } catch (e) {
@@ -25,7 +37,10 @@ export default function Login({ onLogin }) {
   return (
     <div style={{ padding: "40px" }}>
       <h2>Clinic Login</h2>
-      <input placeholder="Username" onChange={(e) => setUser(e.target.value)} />
+      <input
+        placeholder="Username"
+        onChange={(e) => setUser(e.target.value)}
+      />
       <br />
       <input
         type="password"

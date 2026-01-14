@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { useState } from "react";
 import Display from "./Display";
 import StaffPanel from "./StaffPanel";
 import Logs from "./Logs";
 import Login from "./Login";
+import Layout from "./Layout";
 
 function PrivateRoute({ children }) {
   const token = localStorage.getItem("token");
@@ -11,23 +11,19 @@ function PrivateRoute({ children }) {
 }
 
 export default function App() {
-  const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("token"));
-
   return (
     <BrowserRouter>
       <Routes>
-        {/* Public display */}
         <Route path="/" element={<Display />} />
+        <Route path="/login" element={<Login onLogin={() => {}} />} />
 
-        {/* Login */}
-        <Route path="/login" element={<Login onLogin={() => setLoggedIn(true)} />} />
-
-        {/* Protected staff area */}
         <Route
           path="/staff"
           element={
             <PrivateRoute>
-              <StaffPanel />
+              <Layout>
+                <StaffPanel />
+              </Layout>
             </PrivateRoute>
           }
         />
@@ -36,7 +32,9 @@ export default function App() {
           path="/staff/logs"
           element={
             <PrivateRoute>
-              <Logs />
+              <Layout>
+                <Logs />
+              </Layout>
             </PrivateRoute>
           }
         />
