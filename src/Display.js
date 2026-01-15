@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import api from "./api";
 
 export default function Display() {
@@ -39,10 +39,13 @@ export default function Display() {
     }, 100);
   };
 
-  const connectWS = () => {
+  const connectWS = useCallback(() => {
     if (wsRef.current) wsRef.current.close();
 
-    const ws = new WebSocket("ws://192.168.101.144:8000/ws/queue/");
+    const ws = new WebSocket(
+      window.APP_CONFIG.API_BASE_URL.replace("http", "ws") + "/ws/queue/"
+    );
+
     wsRef.current = ws;
 
     ws.onopen = () => {
@@ -70,7 +73,7 @@ export default function Display() {
       console.log("WS disconnected – retrying in 2s");
       retryRef.current = setTimeout(connectWS, 2000);
     };
-  };
+  }, []);
 
   useEffect(() => {
     loadCurrent();
@@ -81,7 +84,7 @@ export default function Display() {
       if (retryRef.current) clearTimeout(retryRef.current);
       if (progressTimer.current) clearInterval(progressTimer.current);
     };
-  }, []);
+  }, [connectWS]);
 
   return (
     <div style={styles.container}>

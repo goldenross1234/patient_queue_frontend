@@ -10,20 +10,28 @@ export default function Login({ onLogin }) {
   const login = async () => {
     try {
       // Get JWT
-      const res = await axios.post("http://192.168.101.144:8000/api/token/", {
-        username,
-        password,
-      });
+      const res = await axios.post(
+        window.APP_CONFIG.API_BASE_URL + "/api/token/",
+        {
+          username,
+          password,
+        }
+      );
+
 
       const token = res.data.access;
       localStorage.setItem("token", token);
 
       // Fetch user info + role
-      const me = await axios.get("http://192.168.101.144:8000/api/me/", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const me = await axios.get(
+        window.APP_CONFIG.API_BASE_URL + "/api/me/",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
 
       localStorage.setItem("role", me.data.role);
 
