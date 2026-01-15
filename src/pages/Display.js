@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from "react";
-import api from "./api";
+import api from "../api";
 
 export default function Display() {
   const [current, setCurrent] = useState(null);

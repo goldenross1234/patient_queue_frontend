@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Display from "./Display";
-import StaffPanel from "./StaffPanel";
-import Logs from "./Logs";
-import Login from "./Login";
+import Display from "./pages/Display";
+import StaffPanel from "./pages/StaffPanel";
+import Logs from "./pages/Logs";
+import Login from "./pages/Login";
 import Layout from "./Layout";
 
 function PrivateRoute({ children }) {
