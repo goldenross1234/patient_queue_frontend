@@ -18,7 +18,6 @@ import DoctorLogin from "./website_pages/DoctorLogin";
 import StaffLogin from "./website_pages/StaffLogin";
 import DoctorDashboard from "./website_pages/DoctorDashboard";
 
-
 // Protect internal systems using JWT
 function PrivateRoute({ children }) {
   const token = localStorage.getItem("token");
@@ -40,10 +39,21 @@ export default function App() {
     <BrowserRouter>
       <Routes>
 
-        {/* ===== QUEUE & STAFF OPERATIONS (DO NOT TOUCH) ===== */}
-        <Route path="/" element={<Display />} />
+        {/* ===== PUBLIC WEBSITE (DEFAULT) ===== */}
+        <Route path="/" element={<WebsitePage><Home /></WebsitePage>} />
+        <Route path="/home" element={<WebsitePage><Home /></WebsitePage>} />
+        <Route path="/about" element={<WebsitePage><About /></WebsitePage>} />
+        <Route path="/services" element={<WebsitePage><Services /></WebsitePage>} />
+        <Route path="/contact" element={<WebsitePage><Contact /></WebsitePage>} />
+        <Route path="/location" element={<WebsitePage><Location /></WebsitePage>} />
+
+        {/* ===== PUBLIC QUEUE DISPLAY ===== */}
+        <Route path="/display" element={<Display />} />
+
+        {/* ===== INTERNAL QUEUE AUTH (legacy) ===== */}
         <Route path="/login" element={<Login onLogin={() => {}} />} />
 
+        {/* ===== STAFF OPERATIONS ===== */}
         <Route
           path="/staff"
           element={
@@ -65,13 +75,6 @@ export default function App() {
             </PrivateRoute>
           }
         />
-
-        {/* ===== PUBLIC WEBSITE ===== */}
-        <Route path="/home" element={<WebsitePage><Home /></WebsitePage>} />
-        <Route path="/about" element={<WebsitePage><About /></WebsitePage>} />
-        <Route path="/services" element={<WebsitePage><Services /></WebsitePage>} />
-        <Route path="/contact" element={<WebsitePage><Contact /></WebsitePage>} />
-        <Route path="/location" element={<WebsitePage><Location /></WebsitePage>} />
 
         {/* ===== PORTAL LOGINS ===== */}
         <Route path="/patients/login" element={<WebsitePage><PatientLogin /></WebsitePage>} />

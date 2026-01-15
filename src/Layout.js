@@ -7,8 +7,11 @@ export default function Layout({ children }) {
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
-    navigate("/login");
+
+    // Redirect to public clinic website
+    navigate("/");
   };
+
 
   return (
     <div style={{ display: "flex", height: "100vh" }}>
