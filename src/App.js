@@ -4,7 +4,7 @@ import Display from "./pages/Display";
 import StaffPanel from "./pages/StaffPanel";
 import Logs from "./pages/Logs";
 import Login from "./pages/Login";
-import Layout from "./Layout";
+import Layout from "./components/Layout.js";
 
 // Website pages
 import Home from "./website_pages/Home";

@@ -29,7 +29,7 @@ export default function Navbar() {
         <Link to="/staff/login" style={{ color: "#fbbf24" }}>
           Staff Login
         </Link>
-        <Link to="/" style={{ color: "#a5f3fc" }}>
+        <Link to="/display" style={{ color: "#a5f3fc" }}>
           View Queue
         </Link>
       </div>
